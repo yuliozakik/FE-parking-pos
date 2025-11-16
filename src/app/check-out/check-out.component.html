@@ -1,0 +1,159 @@
+<div class="container-fluid p-4">
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h3 class="fw-bold m-0" style="cursor:pointer;" routerLink="/">
+    🅿 PARKEE
+  </h3>
+</div>
+
+  <div class="row">
+
+    <div class="col-md-8">
+
+      <div class="row">
+
+        <div class="col-md-6">
+
+          <div class="border rounded bg-light p-3 mb-3" style="height:180px;">
+            <div class="w-100 h-100 d-flex justify-content-center align-items-center text-muted">
+              ENTRY CAMERA
+            </div>
+          </div>
+
+          <div class="border rounded bg-light p-3 mb-3" style="height:180px;">
+            <div class="w-100 h-100 d-flex justify-content-center align-items-center text-muted">
+              FACE ENTRY CAMERA
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-md-6">
+
+          <div class="border rounded bg-light p-3 mb-3" style="height:180px;">
+            <div class="w-100 h-100 d-flex justify-content-center align-items-center text-muted">
+              EXIT CAMERA
+            </div>
+          </div>
+
+          <div class="border rounded bg-light p-3 mb-4" style="height:180px;">
+            <div class="w-100 h-100 d-flex justify-content-center align-items-center text-muted">
+              FACE EXIT CAMERA
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div>
+
+        <label class="fw-semibold small">Plat Nomor Kendaraan (F7)</label>
+        <input type="text" class="form-control p-3 mb-4" placeholder="Vehicle Plate" [(ngModel)]="plateNumber" />
+
+        <div class="row">
+
+          <div class="col-md-6">
+            <label class="fw-semibold small">Jenis Kendaraan (F8)</label>
+            <select class="form-select p-3 mb-4" [(ngModel)]="vehicleType">
+              <option value="" disabled selected>Pilih Jenis Kendaraan</option>
+              <option value="MOBIL">Mobil</option>
+              <option value="MOTOR">Motor</option>
+            </select>
+          </div>
+
+          <div class="col-md-6">
+            <label class="fw-semibold small">Metode Pembayaran (F9)</label>
+            <select class="form-select p-3 mb-4" [(ngModel)]="paymentMethod">
+              <option value="CASH">CASH</option>
+              <option value="EMONEY">E-MONEY</option>
+              <option value="QRIS">QRIS</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col-md-6">
+            <label class="fw-semibold small">Nomor Parking Slip (F6)</label>
+
+            <div class="d-flex mb-4">
+              <select class="form-select p-3" [(ngModel)]="parkingSlip">
+                <option value="">-</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="fw-semibold small">Kode Voucher (F10)</label>
+            <input type="text" class="form-control p-3 mb-4" placeholder="Voucher Code" [(ngModel)]="voucherCode" />
+          </div>
+
+        </div>
+
+        <button class="btn btn-outline-secondary w-100 py-3 fw-semibold mb-4" [disabled]="loading"
+          (click)="checkTicket()">
+          Check Ticket
+        </button>
+
+      </div>
+    </div>
+
+    <div class="col-md-4">
+
+      <div class="border rounded p-3 ms-md-3">
+
+        <div class="text-end small text-muted">
+          {{ now | date:'dd MMM yyyy HH:mm:ss' }}
+        </div>
+
+        <h6 class="mt-4 mb-3 fw-bold">Info Ticket</h6>
+
+        <table class="table table-sm">
+          <tbody>
+
+            <tr>
+              <td class="text-muted">Jenis Parkir</td>
+              <td>{{ dataDetail.jenisParkir }}</td>
+            </tr>
+            <tr>
+              <td class="text-muted">Jam Masuk</td>
+              <td>{{ dataDetail.checkInTime | date:'dd MMM yyyy HH:mm' }}</td>
+            </tr>
+            <tr>
+              <td class="text-muted">Jam Keluar</td>
+              <td>{{ dataDetail.checkOutTime | date:'dd MMM yyyy HH:mm' }}</td>
+            </tr>
+            <tr>
+              <td class="text-muted">Member Expired</td>
+              <td>{{ dataDetail.expiredDate | date:'dd MMM yyyy' }}</td>
+            </tr>
+            <tr>
+              <td class="text-muted">Nama Member</td>
+              <td>{{ dataDetail.name }}</td>
+            </tr>
+            <tr>
+              <td class="text-muted">Total Tarif</td>
+              <td>{{ dataDetail.fee | currency:'IDR':'symbol' }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h5 class="fw-bold text-danger mt-3">Total Price</h5>
+        <h3 class="fw-bold">{{ dataDetail.fee | currency:'IDR':'symbol' }}</h3>
+
+        <button class="btn btn-danger w-100 py-3 my-3" (click)="submitCheckOut()"
+          [disabled]="loading || !isTicketChecked">
+          Submit Ticket as Finished
+        </button>
+
+        <button class="btn btn-outline-secondary w-100 py-3" (click)="resetPage()">
+          Atur Ulang Halaman (F5)
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
